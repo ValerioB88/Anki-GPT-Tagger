@@ -32,10 +32,11 @@ def get_tagged_cards(assistant, client, batch_cards):
     message_txt = "\n".join(
         [f"FRONT: {c[map['front']]} BACK: {c[map['back']]}" for c in batch_cards]
     )
+    only_front = [f"FRONT: {c[map['front']]}" for c in batch_cards]
 
     thread = client.beta.threads.create()
 
-    message = client.beta.threads.messages.create(
+    msg = client.beta.threads.messages.create(
         thread_id=thread.id, role="user", content=message_txt
     )
 
@@ -44,18 +45,30 @@ def get_tagged_cards(assistant, client, batch_cards):
         assistant_id=assistant.id,
     )
     if run.status == "completed":
-        messages = client.beta.threads.messages.list(thread_id=thread.id)
+        gpt_output = client.beta.threads.messages.list(thread_id=thread.id)
     tags_pattern = r"<tags>(.*?)<\/tags>"
     batch_output_tags = []
-    for t in messages.data[0].content[0].text.value.split("\n"):
 
-        try:
-            batch_output_tags.append(
-                re.search(tags_pattern, t, re.IGNORECASE | re.DOTALL).group(1)
-            )
-        except AttributeError:
+    gpt_output_split = gpt_output.data[0].content[0].text.value.split("\n")
+    gpt_output_only_front = [g.split("<tags")[0] for g in gpt_output_split]
+
+    for idx, msg_card in enumerate(only_front):
+        gpt_found_output = [
+            gpt_output_split[i]
+            for i, _ in enumerate(gpt_output_only_front)
+            if msg_card.strip() == gpt_output_only_front[i].strip()
+        ]
+        if len(gpt_found_output) > 0:
+            try:
+                batch_output_tags.append(
+                    re.search(
+                        tags_pattern, gpt_found_output[0], re.IGNORECASE | re.DOTALL
+                    ).group(1)
+                )
+            except AttributeError:
+                batch_output_tags.append("")
+        else:
             batch_output_tags.append("")
-
     return batch_output_tags
 
 
@@ -127,7 +140,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--input_file",
         "-i",
-        default="example_deck.txt",
+        default="output3.txt",
     )
     parser.add_argument(
         "--output_file",
@@ -138,6 +151,7 @@ if __name__ == "__main__":
         "--only_untagged",
         help="We will ignore any card that already contain a tag (excluding the default tag `leech`)",
         action="store_true",
+        default=True,
     )
     parser.add_argument(
         "--start_from_card",
@@ -154,7 +168,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--tags_instructions",
-        default="Tags will need to come from this set: `math`, `ML` (machine learning), `CV` (computer vision), `psycho` (psychology), `hist` (history), `rats` (rationality), `coding`, `physics`, `gen` (general knowledge), `music`, `evo` (evolution). If a card doesn't match any of this tag, just leave the corresponding line empty. If you are unsure about the context of the card, give the tag `unsure` together with the tags that are potentially appropriate. This will indicate that someone will double check those cards.",
+        default="Tags will need to come from this set: `math`, `ML` (machine learning), `CV` (computer vision), `psycho` (psychology), `hist` (history), `rats` (rationality), `coding`, `physics`, `gen` (general knowledge), `music`, `evo` (evolution). If a card doesn't match any of this tag, just leave the corresponding line empty or make up your own tag. ",
     )
     args = parser.parse_known_args()[0]
     process(**args.__dict__)
