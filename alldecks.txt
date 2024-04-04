@@ -1,0 +1,21 @@
+#separator:tab
+#html:true
+#guid column:1
+#notetype column:2
+#deck column:3
+#tags column:12
+;+,cK	Basic	Default	Are integers real numbers? 	Yes							
+)9b6E	Basic	Default	Are irrational real numbers? 	Yes							
+ThE)U	Basic	Default	Are rationals real numbers? 	Yes							
+C/5m1	Basic	Default	Are integers rational? 	Yes, they can be expressed as a fraction							
+"L#JeJ"	Basic	Default	Are some irrational numbers algebraic? 	Yes e. G. Sqrt2							
+Y%>6R	Basic	Default	Are trascendental number irrationals? 	Yes, can't be expressed as a fraction							
+~>$WP	Basic	Default	Are trascendental numbers rationals? 	No, can't be expressed as fractions							
+C[A+H	Basic	Default	How is the number of elements in a set called? 	Cardinality							
+iq-C4	Basic	Default	Two sets with the same cardinality are called	Equivalent 							
+"#t,6"	Basic	Default	When are two sets equivalent (same cardinality) ? 	When we can match each element of a set with another elements of the other set							
+n|xZJ	Basic	Default	In che periodo ha vissuto Cantor? 	1845-1918							hist 
+?T1CR	Basic	Default	In che periodo ha vissuto Eulero? 	1707-1783							hist 
+;Bq*G	Basic	Default	Is pi^pi trascendental or not? 	Not known							
+9L71B	Basic	Default	When is a set enumerable? 	When it can be paired with natural numbers							
+adjJ8	Basic	Default	Are all finite sets enumerable? 	Yep							
