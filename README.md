@@ -12,24 +12,25 @@ This script automatically enriches your Anki cards with tags suggested by GPT, s
 ### Step 2: Run the Script
 - **Set your OpenAI API key**: The script looks for the API key in the `openAI_API_key` environment variable. Alternatively, specify it via the command line with `--openAI_API_key`.
 - **Specify tags instructions**: Use the `--tags_instruction` argument. For details, refer to [Default Tag Instructions](#default-tag-instructions). You may also directly modify the instruction string within the script for convenience.
-The run with:
+
+Then run with:
 ```bash
 python anki_tagger.py -i %path_to_your_deck.txt% -o output.txt
 ```
 
 **Example Usages**
 ```bash
-python anki_tagger.py -i alldecks.txt -o output.txt
+python anki_tagger.py -i example_deck.txt -o output.txt
 ```
 or 
 ```bash
-python anki_tagger.py -i alldecks.txt -o output_any_tags.txt --only_untagged --tags_instructions "Use any tag that you deem appropriate"
+python anki_tagger.py -i example_deck.txt -o output_any_tags.txt --only_untagged --tags_instructions "Use any tag that you deem appropriate"
 ``` 
 
 
 Note that by default the script will *append* new content to the output file, if it already exists. 
 
-**Re-import the deck**
+### Step 3: Re-import the deck into Anki**
 *It is strongly recommended to back up your original deck before importing the updated one. In your Anki desktop: `Fil->Import`. In the `Import Options` select `Existing notes: Updated.`.*
 - In Anki Desktop, go to `File -> Import`.
 - In `Import Options`, select `Existing notes: Update`.

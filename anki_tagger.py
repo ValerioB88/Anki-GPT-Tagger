@@ -119,7 +119,7 @@ if __name__ == "__main__":
         description="""
         By default, the new cards are APPENDED to the output file, is it already exists. Once this is finished, you  can import your collection in Anki. IT IS STRONGLY RECCOMENDED TO BACKUP YOUR COLLECTION BEFORE IMPORTING THIS UPDATED ONE. In the Import Options select Existing notes: Updated. 
         Example Usage
-        python anki -i alldecks.txt -o output.txt
+        python anki -i example_deck.txt -o output.txt
         """,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--input_file",
         "-i",
-        default="alldecks.txt",
+        default="example_deck.txt",
     )
     parser.add_argument(
         "--output_file",
